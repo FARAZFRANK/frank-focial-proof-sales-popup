@@ -1,0 +1,193 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:dev.sqlite"
+}
+
+model Session {
+  id                  String    @id
+  shop                String
+  state               String
+  isOnline            Boolean   @default(false)
+  scope               String?
+  expires             DateTime?
+  accessToken         String
+  userId              BigInt?
+  firstName           String?
+  lastName            String?
+  email               String?
+  accountOwner        Boolean   @default(false)
+  locale              String?
+  collaborator        Boolean?  @default(false)
+  emailVerified       Boolean?  @default(false)
+  refreshToken        String?
+  refreshTokenExpires DateTime?
+
+  @@index([shop])
+}
+
+model Settings {
+  id                       Int      @id @default(autoincrement())
+  shop                     String   @unique
+  title                    String?  @default("Frank Social Proof Sales Popup")
+  description              String?  @default("Recently purchased")
+  position                 String?  @default("bottom-left")
+  displayDuration          Int?     @default(5000)
+  initialDelay             Int?     @default(3000)
+  displayGap               Int?     @default(3000)
+  backgroundColor          String?  @default("#ffffff")
+  textColor                String?  @default("#1a1a1a")
+  showMockData             Boolean? @default(false)
+  showVisitorCount         Boolean? @default(false)
+  minVisitors              Int?     @default(5)
+  maxVisitors              Int?     @default(25)
+  isEnabled                Boolean? @default(true)
+  showOnMobile             Boolean? @default(true)
+  showOnDesktop            Boolean? @default(true)
+  mockData                 String?  @default("[{\"name\":\"Emma\",\"city\":\"New York, US\",\"product\":\"Wireless Headphones\"},{\"name\":\"Sophie\",\"city\":\"Amsterdam, NL\",\"product\":\"Leather Backpack\"},{\"name\":\"Liam\",\"city\":\"London, UK\",\"product\":\"Minimalist Wallet\"},{\"name\":\"Lucas\",\"city\":\"Berlin, DE\",\"product\":\"Smart Watch\"},{\"name\":\"Chloe\",\"city\":\"Paris, FR\",\"product\":\"Organic Cotton Tee\"}]")
+  logoUrl                  String?  @default("https://cdn.shopify.com/s/files/1/0533/2089/files/placeholder-images-product-1_large.png")
+  animationType            String?  @default("slide-up")
+  showHotAlert             Boolean? @default(false)
+  labelVerified            String?  @default("Verified by")
+  labelPurchased           String?  @default("Recently purchased")
+  labelSomeoneIn           String?  @default("Someone in")
+  labelVisitors            String?  @default("visitors viewing now")
+  labelViews24h            String?  @default("views in the last 24 hours")
+  labelTrending            String?  @default("Trending Now")
+  showOnPages              String?  @default("all")
+  hideNames                Boolean? @default(false)
+  labelFrom                String?  @default("from")
+  showSoldCount            Boolean? @default(false)
+  labelItemsSold           String?  @default("items sold in the last 24 hours")
+  showPromoBar             Boolean? @default(false)
+  promoText                String?  @default("Flash Sale! Get 20% OFF with code: SAVE20")
+  promoLink                String?  @default("")
+  promoBgColor             String?  @default("#1a1a1a")
+  promoTextColor           String?  @default("#ffffff")
+  showAnnounce             Boolean? @default(false)
+  announceTitle            String?  @default("Special Offer!")
+  announceText             String?  @default("Subscribe to our newsletter and get 10% off your first order.")
+  announceButtonText       String?  @default("Claim Offer")
+  announceButtonLink       String?  @default("/collections/all")
+  announceImage            String?  @default("")
+  announceTrigger          String?  @default("load")
+  showCartTimer            Boolean? @default(false)
+  cartTimerMins            Int?     @default(10)
+  cartTimerText            String?  @default("Your cart is reserved for")
+  showEmailInput           Boolean? @default(false)
+  showInventory            Boolean? @default(false)
+  inventoryThreshold       Int?     @default(10)
+  inventoryText            String?  @default("Hurry! Only {stock} left in stock!")
+  announceOnce             Boolean? @default(true)
+  showTrustBadges          Boolean? @default(false)
+  trustStyle               String?  @default("colored")
+  trustBadgesData          String?  @default("[{\"icon\":\"truck\",\"text\":\"Free Shipping\"},{\"icon\":\"shield\",\"text\":\"Secure Checkout\"},{\"icon\":\"refresh\",\"text\":\"Money Back Guarantee\"}]")
+  sales_pos                String?  @default("bottom-left")
+  sales_bg                 String?  @default("#ffffff")
+  sales_text               String?  @default("#1a1a1a")
+  sales_anim               String?  @default("slide-up")
+  counter_pos              String?  @default("bottom-right")
+  counter_bg               String?  @default("#ffffff")
+  counter_text             String?  @default("#1a1a1a")
+  cart_bg                  String?  @default("#fef2f2")
+  cart_text                String?  @default("#991b1b")
+  cart_pos                 String?  @default("inline")
+  promo_pos                String?  @default("top")
+  announce_bg              String?  @default("#ffffff")
+  announce_text            String?  @default("#1a1a1a")
+  announce_pos             String?  @default("center")
+  showExitPopup            Boolean? @default(false)
+  exitTitle                String?  @default("Wait! Don't go!")
+  exitText                 String?  @default("Get 10% off your order if you stay!")
+  exit_bg                  String?  @default("#ffffff")
+  exit_text                String?  @default("#1a1a1a")
+  promoHeight              Int?     @default(44)
+  promoFontSize            Int?     @default(14)
+  promoShowOn              String?  @default("all")
+  sales_radius             Int?     @default(8)
+  sales_shadow             String?  @default("0 4px 12px rgba(0,0,0,0.1)")
+  sales_font               String?  @default("Inter, sans-serif")
+  sales_border_color       String?  @default("#e1e3e5")
+  sales_border_width       Int?     @default(0)
+  counter_radius           Int?     @default(50)
+  counter_border_color     String?  @default("#e1e3e5")
+  counter_border_width     Int?     @default(1)
+  counter_shadow           String?  @default("0 2px 8px rgba(0,0,0,0.05)")
+  counter_anim             String?  @default("slide-up")
+  counter_font             String?  @default("Inter, sans-serif")
+  counter_delay            Int?     @default(3000)
+  counter_duration         Int?     @default(6000)
+  counter_gap              Int?     @default(4000)
+  showSalesPopups          Boolean? @default(true)
+  cart_radius              Int?     @default(8)
+  cart_border_width        Int?     @default(1)
+  cart_border_color        String?  @default("#fee2e2")
+  cart_shadow              String?  @default("0 2px 8px rgba(0,0,0,0.05)")
+  cart_font                String?  @default("'Outfit', sans-serif")
+  cart_show_progress       Boolean? @default(true)
+  cart_timeout_action      String?  @default("message")
+  promoCode                String?  @default("SAVE20")
+  verifiedColor            String?  @default("#10b981")
+  announceBackdropBlur     Boolean? @default(true)
+  announceBorderRadius     Int?     @default(16)
+  announceBtnBgColor       String?  @default("#1a1a1a")
+  announceBtnTextColor     String?  @default("#ffffff")
+  announceDelay            Int?     @default(3000)
+  announceSuccessMessage   String?  @default("Thank you for subscribing!")
+  announceWidth            Int?     @default(450)
+  exitBackdropBlur         Boolean? @default(true)
+  exitBorderRadius         Int?     @default(16)
+  exitBtnBgColor           String?  @default("#1a1a1a")
+  exitBtnTextColor         String?  @default("#ffffff")
+  exitButtonLink           String?  @default("")
+  exitButtonText           String?  @default("Stay with us!")
+  exitOnce                 Boolean? @default(true)
+  exitSuccessMessage       String?  @default("Thank you!")
+  exitWidth                Int?     @default(450)
+  showExitEmailInput       Boolean? @default(false)
+  trustAlignment           String?  @default("center")
+  trustBgColor             String?  @default("#ffffff")
+  trustBorderColor         String?  @default("#e1e3e5")
+  trustBorderRadius        Int?     @default(10)
+  trustBorderWidth         Int?     @default(1)
+  trustIconColor           String?  @default("#2563eb")
+  trustLayout              String?  @default("grid")
+  trustTextColor           String?  @default("#1a1a1a")
+  counterFluctuate         Boolean? @default(true)
+  counterPulse             Boolean? @default(true)
+  counter_loop             Boolean? @default(false)
+  counter_once_per_session Boolean? @default(false)
+  promoOnce                Boolean? @default(false)
+}
+
+model Analytics {
+  id          Int    @id @default(autoincrement())
+  shop        String
+  date        String
+  impressions Int    @default(0)
+  clicks      Int    @default(0)
+
+  @@unique([shop, date])
+}
+
+model Newsletter {
+  id        Int      @id @default(autoincrement())
+  shop      String
+  email     String
+  createdAt DateTime @default(now())
+
+  @@index([shop, createdAt])
+}
+
+model ProductView {
+  id     Int    @id @default(autoincrement())
+  shop   String
+  handle String
+  date   String
+  count  Int    @default(0)
+
+  @@unique([shop, handle, date])
+}

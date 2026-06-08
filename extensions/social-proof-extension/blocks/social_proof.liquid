@@ -1,0 +1,13 @@
+<script>
+  window.frankSocialProofProductHandle = "{{ product.handle }}";
+</script>
+<link rel="stylesheet" href="{{ 'social-proof.css' | asset_url }}">
+<script src="{{ 'social-proof.js' | asset_url }}" defer></script>
+
+{% schema %}
+{
+  "name": "Social Proof Popup",
+  "target": "body",
+  "settings": []
+}
+{% endschema %}

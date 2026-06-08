@@ -1,0 +1,12 @@
+{
+  "general": {
+    "heading": "Recent Activity",
+    "sales_popup_image": "Sales Popup Image",
+    "popup_position": "Popup Position",
+    "popup_bg_color": "Popup Background Color",
+    "popup_text_color": "Popup Text Color",
+    "hide_names": "Hide Customer Names",
+    "purchased_label": "Purchased Label",
+    "enable_sales_popups": "Enable Sales Popups"
+  }
+}
