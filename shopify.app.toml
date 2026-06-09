@@ -3,7 +3,7 @@
 client_id = "3054b10929bcf25344a5db6896f020aa"
 handle = "frank-social-proof"
 name = "Frank Social Proof Sales Popup"
-application_url = "https://example.com"
+application_url = "https://frank-social-proof-sales-popup.wpfrank.com"
 embedded = true
 
 [build]
@@ -37,9 +37,9 @@ api_version = "2026-07"
 scopes = "read_orders,read_products,write_files,read_files,read_themes"
 
 [auth]
-redirect_urls = [ "https://example.com/api/auth" ]
+redirect_urls = [ "https://frank-social-proof-sales-popup.wpfrank.com/api/auth" ]
 
 [app_proxy]
-url = "https://example.com/api"
+url = "https://frank-social-proof-sales-popup.wpfrank.com/api"
 subpath = "social-proof"
 prefix = "apps"
