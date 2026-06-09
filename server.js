@@ -1,10 +1,19 @@
 import { spawn } from "child_process";
+import path from "path";
+import { fileURLToPath } from "url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// Use the absolute path to the current Node executable running this script
+const nodePath = process.execPath;
+const prismaCliPath = path.join(__dirname, "node_modules", "prisma", "build", "index.js");
+const rrServeCliPath = path.join(__dirname, "node_modules", "@react-router", "serve", "bin.js");
 
 console.log("Running database setup and migrations...");
 // Run migrations on start to ensure tables exist in database
-const setup = spawn("npx", ["prisma", "migrate", "deploy"], {
+const setup = spawn(nodePath, [prismaCliPath, "migrate", "deploy"], {
   stdio: "inherit",
-  shell: true,
   env: process.env
 });
 
@@ -16,9 +25,8 @@ setup.on("exit", (code) => {
   }
   
   console.log("Starting React Router server...");
-  const server = spawn("npx", ["react-router-serve", "./build/server/index.js"], {
+  const server = spawn(nodePath, [rrServeCliPath, "./build/server/index.js"], {
     stdio: "inherit",
-    shell: true,
     env: process.env
   });
 
