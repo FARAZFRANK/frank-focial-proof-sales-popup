@@ -6,10 +6,21 @@ import { fileURLToPath } from "url";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
+// Ensure DATABASE_URL is set for runtime
+if (!process.env.DATABASE_URL) {
+  process.env.DATABASE_URL = "file:./prisma/dev.sqlite";
+}
+
 const nodePath = process.execPath;
 const prismaCliPath = path.join(__dirname, "node_modules", "prisma", "build", "index.js");
 const rrServeCliPath = path.join(__dirname, "node_modules", "@react-router", "serve", "bin.js");
-const dbPath = path.join(__dirname, "prisma", "dev.sqlite");
+
+// Resolve database file path if using SQLite
+let dbPath = path.join(__dirname, "prisma", "dev.sqlite");
+if (process.env.DATABASE_URL.startsWith("file:")) {
+  const relativePath = process.env.DATABASE_URL.replace("file:", "");
+  dbPath = path.resolve(__dirname, relativePath);
+}
 
 function startServer() {
   console.log("Starting React Router server...");
@@ -40,11 +51,13 @@ function runMigrations() {
   });
 }
 
-// Optimization: If the SQLite database file already exists, bypass the migration process
-// to save memory and CPU on Hostinger, preventing restarts.
-if (fs.existsSync(dbPath)) {
-  console.log("Database already exists. Skipping migrations to optimize startup.");
+// Check if database exists and is not empty (size > 0)
+const dbExists = fs.existsSync(dbPath) && fs.statSync(dbPath).size > 0;
+
+if (dbExists) {
+  console.log("Database already exists and is initialized. Skipping migrations to optimize startup.");
   startServer();
 } else {
+  console.log("Database not found or uninitialized. Preparing migrations...");
   runMigrations();
 }
