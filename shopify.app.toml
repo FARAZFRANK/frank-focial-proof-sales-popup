@@ -37,7 +37,7 @@ api_version = "2026-07"
 scopes = "read_orders,read_products,write_files,read_files,read_themes"
 
 [auth]
-redirect_urls = [ "https://frank-social-proof-sales-popup.wpfrank.com/api/auth" ]
+redirect_urls = [ "https://frank-social-proof-sales-popup.wpfrank.com/auth" ]
 
 [app_proxy]
 url = "https://frank-social-proof-sales-popup.wpfrank.com/api"
