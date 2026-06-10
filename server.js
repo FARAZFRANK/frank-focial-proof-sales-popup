@@ -15,6 +15,25 @@ const nodePath = process.execPath;
 const prismaCliPath = path.join(__dirname, "node_modules", "prisma", "build", "index.js");
 const rrServeCliPath = path.join(__dirname, "node_modules", "@react-router", "serve", "bin.js");
 
+// Fix EACCES (Permission Denied) errors for Prisma engine binaries on Linux hosting
+const enginesDir = path.join(__dirname, "node_modules", "@prisma", "engines");
+if (fs.existsSync(enginesDir)) {
+  console.log("Setting execute permissions for Prisma engines...");
+  try {
+    const files = fs.readdirSync(enginesDir);
+    for (const file of files) {
+      const filePath = path.join(enginesDir, file);
+      const stat = fs.statSync(filePath);
+      if (stat.isFile() && !file.endsWith(".js") && !file.endsWith(".json") && !file.endsWith(".md") && !file.endsWith(".ts")) {
+        console.log(`Setting executable permissions (chmod +x) for engine: ${file}`);
+        fs.chmodSync(filePath, 0o755);
+      }
+    }
+  } catch (err) {
+    console.error("Failed to set permissions on Prisma engines:", err);
+  }
+}
+
 // Resolve database file path if using SQLite
 let dbPath = path.join(__dirname, "prisma", "dev.sqlite");
 if (process.env.DATABASE_URL.startsWith("file:")) {
