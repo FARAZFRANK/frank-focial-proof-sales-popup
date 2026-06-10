@@ -2,7 +2,7 @@
   "name": "frank-social-proof",
   "private": true,
   "scripts": {
-    "build": "node prisma-setup.js && prisma generate && node minify-extension.js && react-router build",
+    "build": "node prisma-setup.js && prisma generate && prisma migrate deploy && node minify-extension.js && react-router build",
     "dev": "shopify app dev",
     "minify": "node minify-extension.js",
     "config:link": "shopify app config link",
